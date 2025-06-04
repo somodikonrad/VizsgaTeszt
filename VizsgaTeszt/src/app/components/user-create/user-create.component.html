@@ -1,0 +1,17 @@
+<div *ngIf="successMessage" class="alert alert-success" role="alert">
+  {{ successMessage }}
+</div>
+
+<div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+  {{ errorMessage }}
+</div>
+
+<h2>Új felhasználó</h2>
+<form (ngSubmit)="onSubmit()" #userForm="ngForm" class="mb-3">
+  <input [(ngModel)]="name" name="name" placeholder="Név" required class="form-control mb-2" />
+  <input [(ngModel)]="email" name="email" placeholder="Email" required type="email" class="form-control mb-2" />
+  <input [(ngModel)]="age" name="age" type="number" placeholder="Kor" required class="form-control mb-2" />
+  <button type="submit" class="btn btn-primary">
+    {{ isEditing ? 'Mentés' : 'Hozzáadás' }}
+  </button>
+</form>

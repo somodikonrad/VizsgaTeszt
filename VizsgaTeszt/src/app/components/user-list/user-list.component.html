@@ -1,0 +1,33 @@
+<div *ngIf="successMessage" class="alert alert-success" role="alert">
+  {{ successMessage }}
+</div>
+
+<div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+  {{ errorMessage }}
+</div>
+
+<h2>Felhasználók listája</h2>
+<ul *ngIf="users.length > 0; else noUsers" class="user-list">
+  <li *ngFor="let user of users" class="user-item">
+    <ng-container *ngIf="editUserId === user.id; else displayMode">
+      <!-- Szerkesztő form -->
+      <form (ngSubmit)="onUpdateUser()" #editForm="ngForm" class="edit-form">
+        <input [(ngModel)]="editName" name="editName" required placeholder="Név" />
+        <input [(ngModel)]="editEmail" name="editEmail" required placeholder="Email" type="email" />
+        <input [(ngModel)]="editAge" name="editAge" required type="number" min="0" placeholder="Kor" />
+        <button type="submit" class="btn btn-success">Mentés</button>
+        <button type="button" (click)="cancelEdit()" class="btn btn-danger">Mégse</button>
+      </form>
+    </ng-container>
+
+    <ng-template #displayMode>
+      <strong>{{ user.name }}</strong> – {{ user.email }} ({{ user.age }} év)
+      <button (click)="startEdit(user)" class="btn btn-primary">Módosítás</button>
+      <button (click)="deleteUser(user.id)" class="btn btn-danger">Törlés</button>
+    </ng-template>
+  </li>
+</ul>
+
+<ng-template #noUsers>
+  <p>Nincs még felhasználó.</p>
+</ng-template>
